@@ -1,24 +1,47 @@
 package com.udr013.services;
 
 
+import com.udr013.databaseMock.databaseMock;
 import com.udr013.domain.Message;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MessageService {
 
-	public List<Message> getAllMessages(){
+	private Map<Long, Message> messages = databaseMock.getMessageMap();
 
-		List<Message> messages =new ArrayList<>();
-		Message m1 = new Message(1L, "Hello World", "Mark");
-		Message m2 = new Message(2L, "Hello Jersey", "Mark");
-		Message m3 = new Message(3L, "Hello Mark", "Mark");
-
-		messages.add(m1);
-		messages.add(m2);
-		messages.add(m3);
-
-		return messages;
+	public MessageService(){
+		messages.put(0L, new Message(0L, "Hello World", "Mark"));
+		messages.put(1L, new Message(1L, "Hello Jersey", "Mark"));
 	}
+
+	public List<Message> getAllMessages(){
+		return new ArrayList<Message>(messages.values());
+	}
+
+	public Message getMessage(long id){
+		return  messages.get(id);
+	}
+
+	public Message addMassage(Message message){
+		message.setId(getAllMessages().size()+1);
+		messages.put(message.getId(),message);
+		return message;
+	}
+
+	public Message updateMessage(Message message){
+		if (message.getId()<= 0){
+			return null;
+		}else{
+			messages.put(message.getId(),message);
+			return message;
+		}
+	}
+
+	public Message removeMessage(long id) {
+		return messages.remove(id);
+	}
+
 }
