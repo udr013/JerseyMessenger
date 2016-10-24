@@ -12,13 +12,13 @@ import java.util.Map;
 public class databaseMock {
 
 	private static Map<Long, Message> messageMap = new HashMap<>();
-	private static Map<Long, Profile> profileMap = new HashMap<>();
+	private static Map<String, Profile> profileMap = new HashMap<>();
 
 	public static Map<Long, Message> getMessageMap() {
 		return messageMap;
 	}
 
-	public static Map<Long, Profile> getProfileMap() {
+	public static Map<String, Profile> getProfileMap() {
 		return profileMap;
 	}
 

@@ -10,32 +10,37 @@ import java.util.Map;
 
 public class ProfileService {
 
-	private Map<Long, Profile> profiles = databaseMock.getProfileMap();
+	private Map<String, Profile> profiles = databaseMock.getProfileMap();
+
+	public ProfileService(){
+		profiles.put("udr013", new Profile(1L,"udr013","Mark","Markie"));
+	}
 
 	public List<Profile> getAllProfiles(){
 		return new ArrayList<>(profiles.values());
 	}
 
-	public Profile getProfile(long id){
-		return  profiles.get(id);
+	public Profile getProfile(String profileName){
+		return  profiles.get(profileName);
 	}
 
 	public Profile addProfile(Profile profile){
 		profile.setId(getAllProfiles().size()+1);
-		profiles.put(profile.getId(),profile);
+		profiles.put(profile.getProfileName(),profile);
 		return profile;
 	}
 
 	public Profile updateProfile(Profile profile){
-		if (profile.getId()<= 0){
+		if (profile.getProfileName().isEmpty()){
 			return null;
 		}else{
-			profiles.put(profile.getId(),profile);
+			profiles.put(profile.getProfileName(),profile);
 			return profile;
 		}
 	}
 
-	public Profile removeProfile(long id) {
-		return profiles.remove(id);
+	public Profile removeProfile(String profileName) {
+
+		return profiles.remove(profileName);
 	}
 }
