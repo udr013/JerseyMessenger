@@ -5,6 +5,7 @@ import com.udr013.databaseMock.databaseMock;
 import com.udr013.domain.Message;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -18,8 +19,31 @@ public class MessageService {
 	}
 
 	public List<Message> getAllMessages(){
+		// remember we can pass a Collection to the ArrayList Constructor
 		return new ArrayList<Message>(messages.values());
 	}
+
+	public List<Message> getAllMessagesFromYear(int year){
+		ArrayList<Message> msgsforYear = new ArrayList<>();
+		Calendar cal = Calendar.getInstance();
+		for(Message message: messages.values()) {
+			cal.setTime(message.getCreated()); //we set cal to year of message
+			if (cal.get(Calendar.YEAR) == year) {
+				msgsforYear.add(message);
+			}
+		}
+		return msgsforYear;
+	}
+
+	public List<Message> getMessagesPaginated(int start,int size){
+		List<Message> list = new ArrayList<Message>(messages.values());
+		if(start + size > list.size()){
+			return new ArrayList<Message>();
+		}else {
+			return list.subList(start, start + size);
+		}
+	}
+
 
 	public Message getMessage(long id){
 		return  messages.get(id);
@@ -40,7 +64,7 @@ public class MessageService {
 		}
 	}
 
-	public Message removeMessage(long id) {
+	public Message removeMessage(long id){
 		return messages.remove(id);
 	}
 

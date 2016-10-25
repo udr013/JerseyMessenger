@@ -25,9 +25,18 @@ public class MessageResource {
 
 	@GET// now jersey now knows how to handle a GET request but also needs to know the format it needs to send back
 	@Produces(MediaType.APPLICATION_JSON) // So we need the @Produces annotation and specify the MediaType
-	public List<Message> getMessages(){
-
-		return messageService.getAllMessages();
+	public List<Message> getMessages(@QueryParam("year") int year,
+									 @QueryParam("size") int size,
+									 @QueryParam("index") int index ){
+		if(year>0){
+			return messageService.getAllMessagesFromYear(year);
+		}
+		if(size > 0 && index >= 0){
+			return messageService.getMessagesPaginated(index, size);
+		}
+		else {
+			return messageService.getAllMessages();
+		}
 	}
 
 	@GET

@@ -2,10 +2,13 @@ package com.udr013.domain;
 
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.Date;
 
 @XmlRootElement
-public class Profile {
+public class Profile implements Serializable {
+
+	private static final long serialVersionUID = 6804998555093970805L;
 
 	private long id;
 	private String profileName;

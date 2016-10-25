@@ -1,6 +1,7 @@
 package com.udr013.domain;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.Date;
 
 /**n
@@ -8,7 +9,9 @@ import java.util.Date;
  * in MediaType.APPLICATION_XML we need to annotate it with @XmlRootElement
  */
 @XmlRootElement
-public class Message {
+public class Message implements Serializable{
+
+	private static final long serialVersionUID = 2816203441445864290L;
 
 	private long id;
 	private String message;
