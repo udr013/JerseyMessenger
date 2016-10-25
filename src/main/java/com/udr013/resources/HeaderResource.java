@@ -1,9 +1,6 @@
 package com.udr013.resources;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -15,7 +12,9 @@ import javax.ws.rs.core.MediaType;
 public class HeaderResource {
 
 	@GET
-	public String getHeaderParams(@HeaderParam("blabla") String header){
-		return "HeaderParam value of blabla: " +header;
+	public String getHeaderParams(@HeaderParam("blabla") String header,
+								  @CookieParam("cookie") String cookie){
+		// there is als a @FormParam but  not  widely used
+		return "HeaderParam value of blabla: " + header +"/n This is myCookie: " + cookie;
 	}
 }
