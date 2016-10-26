@@ -1,6 +1,7 @@
 package com.udr013.resources;
 
 import com.udr013.domain.Message;
+import com.udr013.resources.beans.MessageFilterBean;
 import com.udr013.services.MessageService;
 
 import javax.ws.rs.*;
@@ -25,14 +26,12 @@ public class MessageResource {
 
 	@GET// now jersey now knows how to handle a GET request but also needs to know the format it needs to send back
 	@Produces(MediaType.APPLICATION_JSON) // So we need the @Produces annotation and specify the MediaType
-	public List<Message> getMessages(@QueryParam("year") int year,
-									 @QueryParam("size") int size,
-									 @QueryParam("index") int index ){
-		if(year>0){
-			return messageService.getAllMessagesFromYear(year);
+	public List<Message> getMessages(@BeanParam MessageFilterBean filter){
+		if(filter.getYear()>0){
+			return messageService.getAllMessagesFromYear(filter.getYear());
 		}
-		if(size > 0 && index >= 0){
-			return messageService.getMessagesPaginated(index, size);
+		if(filter.getSize() > 0 && filter.getIndex() >= 0){
+			return messageService.getMessagesPaginated(filter.getIndex(), filter.getSize());
 		}
 		else {
 			return messageService.getAllMessages();
