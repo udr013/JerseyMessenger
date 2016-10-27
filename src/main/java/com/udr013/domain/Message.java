@@ -1,8 +1,11 @@
 package com.udr013.domain;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**n
  * to know its value is represented as XML element in an XML document so we can use it
@@ -17,6 +20,7 @@ public class Message implements Serializable{
 	private String message;
 	private Date created;
 	private String author;
+	private Map<Long, Comment> commentsMap = new HashMap<>();
 
 	public Message(){
 
@@ -27,6 +31,17 @@ public class Message implements Serializable{
 		this.message = message;
 		this.created = new Date();
 		this.author = author;
+	}
+
+	/**
+	 * We Mark this with XmlTrancient so they won't show up when we ask for messages*/
+	@XmlTransient
+	public Map<Long, Comment> getCommentsMap() {
+		return commentsMap;
+	}
+
+	public void setCommentsMap(Map<Long, Comment> commentsMap) {
+		this.commentsMap = commentsMap;
 	}
 
 	public long getId() {
