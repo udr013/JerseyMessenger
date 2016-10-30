@@ -5,7 +5,11 @@ import com.udr013.resources.beans.MessageFilterBean;
 import com.udr013.services.MessageService;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -48,8 +52,20 @@ public class MessageResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON) //if only annotated with Consumes it returns  application/xhtml+xml
-	public Message AddMessage(Message message) {
-		return messageService.addMassage(message);
+//	public Message AddMessage(Message message) {
+//		return messageService.addMassage(message);
+//	}
+
+	public Response AddMessage(@Context UriInfo uriInfo, Message message){
+		Message newMessage = messageService.addMassage(message);
+		URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(newMessage.getId())).build();
+		//Response.status(Response.Status.CREATED);
+		return Response
+				//.created(uri)
+				.status(Response.Status.CREATED) //201
+				.contentLocation(uri)
+				.entity(newMessage)
+				.build();
 	}
 
 
@@ -57,16 +73,25 @@ public class MessageResource {
 	@Path("/{messageId}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Message updateMessage(@PathParam("messageId") long messageId, Message message) {
+	public Response updateMessage(@Context UriInfo uriInfo, @PathParam("messageId") long messageId, Message message) {
 		message.setId(messageId);
-		return messageService.updateMessage(message);
+		Message udMessage = messageService.updateMessage(message);
+		URI uri = uriInfo.getAbsolutePath();
+		return Response.status(Response.Status.ACCEPTED) //202
+				.contentLocation(uri)
+				.build();
+
+		//return messageService.updateMessage(message);
 	}
 
 	@DELETE
 	@Path("/{messageId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void deleteMessage(@PathParam("messageId") long messageId) { //void cause nothing to return
+	public Response deleteMessage(@Context UriInfo uriInfo, @PathParam("messageId") long messageId) {
 		messageService.removeMessage(messageId);
+		return  Response.status(Response.Status.GONE).build();
+
+
 	}
 
 
