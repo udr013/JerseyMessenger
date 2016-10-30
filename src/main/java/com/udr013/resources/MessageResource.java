@@ -1,5 +1,6 @@
 package com.udr013.resources;
 
+import com.udr013.Exceptions.DataNotFoundException;
 import com.udr013.domain.Message;
 import com.udr013.resources.beans.MessageFilterBean;
 import com.udr013.services.MessageService;
@@ -45,7 +46,8 @@ public class MessageResource {
 	@GET
 	@Path("/{messageId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Message getMessage(@PathParam("messageId") long messageId) {
+	public Message getMessage(@PathParam("messageId") long messageId) throws DataNotFoundException { // we let jax-rs
+		// handle this exception using the Mapper
 		return messageService.getMessage(messageId);
 	}
 

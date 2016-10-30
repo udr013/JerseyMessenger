@@ -1,6 +1,7 @@
 package com.udr013.services;
 
 
+import com.udr013.Exceptions.DataNotFoundException;
 import com.udr013.databaseMock.databaseMock;
 import com.udr013.domain.Message;
 
@@ -45,8 +46,13 @@ public class MessageService {
 	}
 
 
-	public Message getMessage(long id){
-		return  messages.get(id);
+	public Message getMessage (long id) throws DataNotFoundException {
+		Message message = messages.get(id);
+		if(message == null){
+			//handle this elsewhere
+			throw new DataNotFoundException("Message with id: "+ id + " is not found on the server!");
+		}
+		return message;
 	}
 
 	public Message addMassage(Message message){
