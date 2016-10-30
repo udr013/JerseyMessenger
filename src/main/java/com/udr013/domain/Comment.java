@@ -4,12 +4,13 @@ package com.udr013.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Comment implements Serializable {
+public class Comment implements
+		Serializable {
 
 
 	private static final long serialVersionUID = 8756878960992576800L;
-	private long id;
-	private String message;
+	private long commentId;
+	private String msgComment;
 	private Date created;
 	private String author;
 
@@ -17,27 +18,27 @@ public class Comment implements Serializable {
 
 	}
 
-	public Comment(long id, String message, String author) {
-		this.id = id;
-		this.message = message;
+	public Comment(long commentId, String msgComment, String author) {
+		this.commentId = commentId;
+		this.msgComment = msgComment;
 		this.created = new Date();
 		this.author = author;
 	}
 
-	public long getId() {
-		return id;
+	public long getCommentId() {
+		return commentId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setCommentId(long commentId) {
+		this.commentId = commentId;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getMsgComment() {
+		return msgComment;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setMsgComment(String msgComment) {
+		this.msgComment = msgComment;
 	}
 
 	public Date getCreated() {
