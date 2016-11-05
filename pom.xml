@@ -65,7 +65,7 @@
         <repository>
             <id>internal.repo</id>
             <name>Internal repo</name>
-            <url>file:///home/</url>
+            <url>file:///home/udr013/apache-tomcat-8.5.6/webapps</url>
         </repository>
     </distributionManagement>
 </project>
